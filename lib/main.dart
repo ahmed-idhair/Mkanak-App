@@ -92,7 +92,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.lightTheme,
         debugShowCheckedModeBanner: false,
-        title: 'Jordan Offers',
+        title: 'مكانك',
       ),
     );
   }
