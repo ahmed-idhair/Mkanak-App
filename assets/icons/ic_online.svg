@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="134" height="134" viewBox="0 0 134 134">
+  <defs>
+    <filter id="Rectangle_7126" x="0" y="0" width="134" height="134" filterUnits="userSpaceOnUse">
+      <feOffset dy="5" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="7.5" result="blur"/>
+      <feFlood flood-opacity="0.051"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_52075" data-name="Group 52075" transform="translate(-568.5 -301.5)">
+    <g transform="matrix(1, 0, 0, 1, 568.5, 301.5)" filter="url(#Rectangle_7126)">
+      <rect id="Rectangle_7126-2" data-name="Rectangle 7126" width="89" height="89" rx="24" transform="translate(22.5 17.5)" fill="#fff"/>
+    </g>
+    <g id="credit-card" transform="translate(608.75 262.5)">
+      <g id="Group_52091" data-name="Group 52091" transform="translate(0 85.333)">
+        <g id="Group_52090" data-name="Group 52090" transform="translate(0 0)">
+          <path id="Path_49970" data-name="Path 49970" d="M47.352,85.333H5.506A5.514,5.514,0,0,0,0,90.839v24.227a5.514,5.514,0,0,0,5.506,5.506H47.352a5.514,5.514,0,0,0,5.506-5.506V90.839A5.514,5.514,0,0,0,47.352,85.333Zm3.3,29.733a3.308,3.308,0,0,1-3.3,3.3H5.506a3.308,3.308,0,0,1-3.3-3.3V90.839a3.308,3.308,0,0,1,3.3-3.3H47.352a3.308,3.308,0,0,1,3.3,3.3v24.227Z" transform="translate(0 -85.333)" fill="#586af6"/>
+        </g>
+      </g>
+      <g id="Group_52093" data-name="Group 52093" transform="translate(0 91.94)">
+        <g id="Group_52092" data-name="Group 52092">
+          <path id="Path_49971" data-name="Path 49971" d="M51.757,149.333H1.1a1.1,1.1,0,0,0-1.1,1.1v6.607a1.1,1.1,0,0,0,1.1,1.1H51.757a1.1,1.1,0,0,0,1.1-1.1v-6.607A1.1,1.1,0,0,0,51.757,149.333Zm-1.1,6.607H2.2v-4.4H50.656v4.4Z" transform="translate(0 -149.333)" fill="#586af6"/>
+        </g>
+      </g>
+      <g id="Group_52095" data-name="Group 52095" transform="translate(6.607 107.357)">
+        <g id="Group_52094" data-name="Group 52094" transform="translate(0 0)">
+          <path id="Path_49972" data-name="Path 49972" d="M78.316,298.667H65.1a1.1,1.1,0,1,0,0,2.2H78.316a1.1,1.1,0,1,0,0-2.2Z" transform="translate(-64 -298.667)" fill="#edae20"/>
+        </g>
+      </g>
+      <g id="Group_52097" data-name="Group 52097" transform="translate(6.607 111.762)">
+        <g id="Group_52096" data-name="Group 52096" transform="translate(0 0)">
+          <path id="Path_49973" data-name="Path 49973" d="M78.316,341.333H65.1a1.1,1.1,0,1,0,0,2.2H78.316a1.1,1.1,0,1,0,0-2.2Z" transform="translate(-64 -341.333)" fill="#edae20"/>
+        </g>
+      </g>
+      <g id="Group_52099" data-name="Group 52099" transform="translate(37.441 105.155)">
+        <g id="Group_52098" data-name="Group 52098" transform="translate(0 0)">
+          <path id="Path_49974" data-name="Path 49974" d="M368.173,277.333h-2.2a3.308,3.308,0,0,0-3.3,3.3v2.2a3.308,3.308,0,0,0,3.3,3.3h2.2a3.308,3.308,0,0,0,3.3-3.3v-2.2A3.308,3.308,0,0,0,368.173,277.333Zm1.1,5.506a1.1,1.1,0,0,1-1.1,1.1h-2.2a1.1,1.1,0,0,1-1.1-1.1v-2.2a1.1,1.1,0,0,1,1.1-1.1h2.2a1.1,1.1,0,0,1,1.1,1.1Z" transform="translate(-362.667 -277.333)" fill="#edae20"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
