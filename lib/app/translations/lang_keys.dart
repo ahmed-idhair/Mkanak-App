@@ -470,4 +470,6 @@ class LangKeys {
   static const String newO = 'newO';
   static const String accepted = 'accepted';
   static const String cancelled = 'cancelled';
+  static const String chooseLanguage = 'chooseLanguage';
+  static const String chooseLanguageInfo = 'chooseLanguageInfo';
 }

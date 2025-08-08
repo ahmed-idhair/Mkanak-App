@@ -12,11 +12,19 @@ class HomePageController extends BaseController {
   final searchController = TextEditingController();
   final RxBool isLoading = false.obs;
   var categoriesList = <Categories>[].obs;
+  var filteredCategoriesList = <Categories>[].obs;
+  final RxString searchQuery = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
     getCategories();
+
+    // Listen to search text changes
+    searchController.addListener(() {
+      searchQuery.value = searchController.text;
+      filterCategories();
+    });
   }
 
   @override
@@ -42,6 +50,9 @@ class HomePageController extends BaseController {
         if (response.isSuccess && response.data != null) {
           categoriesList.clear();
           categoriesList.addAll(response.data!);
+          // Initialize filtered list with all categories
+          filteredCategoriesList.clear();
+          filteredCategoriesList.addAll(categoriesList);
         } else {
           AppToast.error(response.message);
         }
@@ -51,5 +62,34 @@ class HomePageController extends BaseController {
       isLoading(false);
       update(['updateList']);
     }
+  }
+
+  void filterCategories() {
+    if (searchQuery.value.isEmpty) {
+      // Show all categories when search is empty
+      filteredCategoriesList.clear();
+      filteredCategoriesList.addAll(categoriesList);
+    } else {
+      // Filter categories based on search query
+      final filtered = categoriesList.where((category) {
+        final title = category.title?.toLowerCase() ?? '';
+        final description = category.description?.toLowerCase() ?? '';
+        final query = searchQuery.value.toLowerCase();
+
+        return title.contains(query) || description.contains(query);
+      }).toList();
+
+      filteredCategoriesList.clear();
+      filteredCategoriesList.addAll(filtered);
+    }
+    update(['updateList']);
+  }
+
+  void clearSearch() {
+    searchController.clear();
+    searchQuery.value = '';
+    filteredCategoriesList.clear();
+    filteredCategoriesList.addAll(categoriesList);
+    update(['updateList']);
   }
 }

@@ -19,20 +19,6 @@ class AppUtils {
     return 'assets/icons/$name.$format';
   }
 
-  static String formatDate(DateTime date, {String format = 'yyyy-MM-dd'}) {
-    // Simple date formatting for common formats
-    if (format == 'yyyy-MM-dd') {
-      return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
-    } else if (format == 'dd/MM/yyyy') {
-      return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
-    } else if (format == 'MM/dd/yyyy') {
-      return '${date.month.toString().padLeft(2, '0')}/${date.day.toString().padLeft(2, '0')}/${date.year}';
-    } else if (format == 'yyyy-MM-dd HH:mm') {
-      return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
-    }
-    return date.toString();
-  }
-
   static String formatTimeTo12Hour(String time24) {
     try {
       // Handle both HH:mm and HH:mm:ss formats
@@ -94,32 +80,6 @@ class AppUtils {
     }
   }
 
-  static String getDaysLeft(String? endDates) {
-    if (endDates == null || endDates == "") {
-      return '-';
-    }
-    try {
-      // Parse the end date from API
-      final DateTime endDate = DateTime.parse(endDates);
-      final DateTime today = DateTime.now();
-
-      // Calculate the difference in days
-      final int daysLeft = endDate.difference(today).inDays;
-
-      if (daysLeft < 0) {
-        return LangKeys.expired.tr;
-      } else if (daysLeft == 0) {
-        return LangKeys.lastDay.tr;
-      } else if (daysLeft == 1) {
-        return LangKeys.dayLeft.tr;
-      } else {
-        return '$daysLeft ${LangKeys.daysLeft.tr}';
-      }
-    } catch (e) {
-      // In case of parsing error
-      return '-- days left';
-    }
-  }
 
   static void shareAppLink(String textShare) {
     final String appName = 'Offers';
@@ -135,73 +95,6 @@ class AppUtils {
     Share.share(message);
   }
 
-  static void openUrlBrowser(String url) async {
-    if (url.isEmpty) return;
-
-    final Uri uri = Uri.parse(url);
-
-    try {
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        Get.snackbar(
-          'Error',
-          'Could not launch this live stream',
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      }
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    }
-  }
-
-  // Function to open Google Maps with specific coordinates
-  static void openLocationInGoogleMaps(
-    String lat,
-    String lng, {
-    String label = '',
-  }) async {
-    if (lat.isEmpty || lng.isEmpty) {
-      Get.snackbar('Error', 'Location coordinates not available');
-      return;
-    }
-
-    // Create Google Maps URL (with optional label/name)
-    final String googleMapsUrl =
-        label.isEmpty
-            ? 'https://www.google.com/maps/search/?api=1&query=$lat,$lng'
-            : 'https://www.google.com/maps/search/?api=1&query=$lat,$lng&query_place_id=$label';
-
-    // Create URI for launching
-    final Uri uri = Uri.parse(googleMapsUrl);
-
-    // Try to launch the URL
-    try {
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(
-          uri,
-          mode:
-              LaunchMode
-                  .externalApplication, // This opens in the Google Maps app if installed
-        );
-      } else {
-        // Fallback for web or if Google Maps isn't installed
-        final String fallbackUrl = 'https://maps.google.com/?q=$lat,$lng';
-        final Uri fallbackUri = Uri.parse(fallbackUrl);
-        if (await canLaunchUrl(fallbackUri)) {
-          await launchUrl(fallbackUri);
-        } else {
-          Get.snackbar('Error', 'Could not open maps');
-        }
-      }
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to open maps: $e');
-    }
-  }
 
   static String getStatusText(String status) {
     switch (status) {

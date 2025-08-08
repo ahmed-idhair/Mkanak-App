@@ -36,6 +36,7 @@ class SelectLocationController extends BaseController
     _requestLocationPermission();
   }
 
+
   void _initializeAnimations() {
     markerAnimationController = AnimationController(
       duration: const Duration(milliseconds: 600),

@@ -353,10 +353,10 @@ const Map<String, String> en = {
   LangKeys.all: 'All',
   LangKeys.topPartners: 'Top Partners',
   LangKeys.viewAll: 'View All',
-  LangKeys.expired: 'Expired', //منتهي الصلاحية
-  LangKeys.lastDay: 'Last Day', //اليوم الأخير
-  LangKeys.dayLeft: 'Day left', //يوم واحد متبقي
-  LangKeys.daysLeft: 'Days left', //يوم متبقي
+  LangKeys.expired: 'Expired',
+  LangKeys.lastDay: 'Last Day',
+  LangKeys.dayLeft: 'Day left',
+  LangKeys.daysLeft: 'Days left',
   LangKeys.topPicks: 'Top Picks',
   LangKeys.nearest: 'Nearest',
   LangKeys.latest: 'Latest',
@@ -451,7 +451,8 @@ const Map<String, String> en = {
   LangKeys.selectDay: "Select Day",
   LangKeys.rating: "Rating",
   LangKeys.rateOrder: "Rate Order",
-  LangKeys.shareYourFeedbackAboutTheServiceQuality: "Share your feedback about the service quality",
+  LangKeys.shareYourFeedbackAboutTheServiceQuality:
+      "Share your feedback about the service quality",
   LangKeys.yourRating: "Your Rating",
   LangKeys.submitRating: "Submit Rating",
   LangKeys.writeYourCommentHere: "Write Your Comment Here",
@@ -463,7 +464,8 @@ const Map<String, String> en = {
   LangKeys.quickActions: "Quick Actions",
   LangKeys.refreshData: "Refresh Data",
   LangKeys.updateOfferMsg: "Update your offer price and description",
-  LangKeys.enterPriceDesOffer: "Enter your offer price and description for this order",
+  LangKeys.enterPriceDesOffer:
+      "Enter your offer price and description for this order",
   LangKeys.descriptionOfferMsg: "Write a detailed description of your offer...",
   LangKeys.availableBalance: "Available Balance",
   LangKeys.financialTransactions: "Financial Transactions",
@@ -473,5 +475,10 @@ const Map<String, String> en = {
   LangKeys.newO: "New",
   LangKeys.accepted: "Accepted",
   LangKeys.cancelled: "Cancelled",
+  LangKeys.chooseLanguage: "Choose Language",
+
+  LangKeys.chooseLanguageInfo:
+      "Choose your language for a personalized app \nexperience , App need to be restart to take effect.",
+
 
 };

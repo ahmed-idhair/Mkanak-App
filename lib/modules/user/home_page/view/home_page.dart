@@ -5,6 +5,7 @@ import 'package:mkanak/app/config/app_theme.dart';
 import 'package:mkanak/app/extensions/color.dart';
 import 'package:mkanak/app/routes/app_routes.dart';
 import 'package:mkanak/app/translations/lang_keys.dart';
+import 'package:mkanak/app/utils/keyboard_utils.dart';
 import 'package:mkanak/app/widgets/app_bar/custom_app_bar.dart';
 import 'package:mkanak/app/widgets/common/app_empty_state.dart';
 import 'package:mkanak/app/widgets/common/app_loading_view.dart';
@@ -36,33 +37,37 @@ class HomePage extends StatelessWidget {
               controller: controller.searchController,
               actionIconPath: "ic_refresh",
               onActionButtonPressed: () {
-                controller.searchController.text = "";
-                // controller.getHome();
+                controller.clearSearch();
               },
               onChanged: (value) {
-                // if (value.isEmpty && controller.searchQuery.isNotEmpty) {
-                //   controller.clearSearch();
-                // }
+                // Filter is handled automatically through the listener in controller
               },
               onSubmitted: () {
-                print('Log zada');
-                // if (controller.searchController.text.isNotEmpty) {
-                //   Get.toNamed(
-                //     AppRoutes.searchProducts,
-                //     arguments: {
-                //       "search": controller.searchController.text,
-                //     },
-                //   );
-                //   controller.searchController.text = "";
-                // }
+                // Search is handled through onChanged, no need for additional action
               },
               height: 48.h,
             ),
             30.verticalSpace,
-            AppCustomText(
-              text: LangKeys.categories.tr,
-              color: HexColor("3A3A3A"),
-              fontWeight: FontWeight.w800,
+            Row(
+              children: [
+                AppCustomText(
+                  text: LangKeys.categories.tr,
+                  color: HexColor("3A3A3A"),
+                  fontWeight: FontWeight.w800,
+                ),
+                Spacer(),
+                Obx(() {
+                  if (controller.searchQuery.value.isNotEmpty) {
+                    return AppCustomText(
+                      text:
+                          "${controller.filteredCategoriesList.length} ${LangKeys.results.tr}",
+                      color: HexColor("8F95A6"),
+                      fontSize: 12.sp,
+                    );
+                  }
+                  return SizedBox();
+                }),
+              ],
             ),
             16.verticalSpace,
             Expanded(
@@ -72,24 +77,33 @@ class HomePage extends StatelessWidget {
                   if (controller.isLoading.value) {
                     return AppLoadingView();
                   }
-                  if (controller.categoriesList.isEmpty) {
-                    return AppEmptyState(
-                      message: LangKeys.noData.tr,
-                      actionText: LangKeys.retry.tr,
-                      onActionPressed: () {
-                        controller.getCategories();
-                      },
-                    );
+
+                  // Show empty state when no categories match search
+                  if (controller.filteredCategoriesList.isEmpty) {
+                    if (controller.searchQuery.value.isNotEmpty) {
+                      return AppEmptyState(
+                        message: LangKeys.noResultsFound.tr,
+                      );
+                    } else {
+                      return AppEmptyState(
+                        message: LangKeys.noData.tr,
+                        actionText: LangKeys.retry.tr,
+                        onActionPressed: () {
+                          controller.getCategories();
+                        },
+                      );
+                    }
                   }
+
                   return RefreshIndicator(
                     onRefresh: () async {
                       controller.getCategories();
                     },
                     child: ListView.builder(
-                      itemCount: controller.categoriesList.length,
+                      itemCount: controller.filteredCategoriesList.length,
                       itemBuilder: (context, index) {
                         return _buildServiceItem(
-                          controller.categoriesList[index],
+                          controller.filteredCategoriesList[index],
                         );
                       },
                     ),
@@ -102,10 +116,10 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildServiceItem(Categories category) {
     return GestureDetector(
       onTap: () {
+        Get.context?.hideKeyboard();
         Get.toNamed(
           AppRoutes.servicesPage,
           arguments: {"categoryId": category.id},
@@ -133,14 +147,20 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppCustomText(
-                    text: category.title ?? "",
+                    text: _highlightSearchTerm(
+                      category.title ?? "",
+                      controller.searchQuery.value,
+                    ),
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w700,
                     color: Colors.black,
                   ),
                   4.verticalSpace,
                   AppCustomText(
-                    text: category.description ?? "",
+                    text: _highlightSearchTerm(
+                      category.description ?? "",
+                      controller.searchQuery.value,
+                    ),
                     fontSize: 12.sp,
                     color: HexColor("8F95A6"),
                   ),
@@ -151,5 +171,12 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // Optional: Function to highlight search terms in text
+  String _highlightSearchTerm(String text, String searchTerm) {
+    // For now, just return the original text
+    // You can implement text highlighting here if needed
+    return text;
   }
 }

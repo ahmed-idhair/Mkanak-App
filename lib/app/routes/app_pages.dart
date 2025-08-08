@@ -4,6 +4,7 @@ import '../../modules/change_password/view/change_password.dart';
 import '../../modules/contact_us/view/contact_us.dart';
 import '../../modules/forgot_password/view/forgot_password.dart';
 import '../../modules/help_support/view/help_support.dart';
+import '../../modules/language/view/language_screen.dart';
 import '../../modules/new_password/view/new_password.dart';
 import '../../modules/page/view/page_view.dart';
 import '../../modules/provider/add_service/view/add_service.dart';
@@ -29,11 +30,8 @@ import 'app_routes.dart';
 
 final appPages = [
   GetPage(name: AppRoutes.splash, page: () => const Splash()),
-  // GetPage(name: AppRoutes.onBoarding, page: () => OnboardingView()),
   GetPage(name: AppRoutes.signIn, page: () => SignIn()),
   GetPage(name: AppRoutes.signUp, page: () => SignUp()),
-  // // GetPage(name: AppRoutes.serviceList, page: () => ServiceList()),
-  // // GetPage(name: AppRoutes.multiVerification, page: () => MultiVerification()),
   GetPage(name: AppRoutes.forgotPassword, page: () => ForgotPassword()),
   GetPage(name: AppRoutes.newPassword, page: () => NewPassword()),
   GetPage(name: AppRoutes.verificationCode, page: () => VerificationCode()),
@@ -48,6 +46,8 @@ final appPages = [
   GetPage(name: AppRoutes.selectLocation, page: () => SelectLocation()),
   GetPage(name: AppRoutes.newOrder, page: () => NewOrder()),
   GetPage(name: AppRoutes.orderDetails, page: () => OrderDetails()),
+  GetPage(name: AppRoutes.languageScreen, page: () => LanguageScreen()),
+
 
   ///////
   GetPage(name: AppRoutes.pHome, page: () => PHome()),

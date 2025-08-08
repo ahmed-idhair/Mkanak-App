@@ -109,7 +109,9 @@ class PSettingsPage extends StatelessWidget {
                   title: LangKeys.language.tr,
                   hasArrow: true,
                   isShowDivider: true,
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(AppRoutes.languageScreen);
+                  },
                 ),
                 // Others section
                 _buildSectionTitle(LangKeys.others.tr),

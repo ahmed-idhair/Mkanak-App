@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../config/app_theme.dart';
 import '../../extensions/color.dart';
 import '../../utils/app_utils.dart';
@@ -28,42 +27,58 @@ class AppEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(AppTheme.spacing24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SvgPicture.asset(
-              AppUtils.getIconPath(icon ?? "ic_empty"),
-              width: 118.0.w,
-              height: 118.0.h,
-              placeholderBuilder: (BuildContext context) => AppLoadingView(),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // تحديد الأحجام بناءً على المساحة المتاحة
+        final availableHeight = constraints.maxHeight;
+        final iconSize = availableHeight > 300 ? 100.0 : 60.0;
+        final fontSize = availableHeight > 300 ? 14.0 : 12.0;
+        final spacing = availableHeight > 300 ? 20.0 : 12.0;
+
+        return Center(
+          child: Padding(
+            padding: EdgeInsets.all(16.r),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: SvgPicture.asset(
+                    AppUtils.getIconPath(icon ?? "ic_empty"),
+                    width: iconSize.w,
+                    height: iconSize.h,
+                    placeholderBuilder: (BuildContext context) => SizedBox(
+                      width: iconSize.w,
+                      height: iconSize.h,
+                      child: AppLoadingView(),
+                    ),
+                  ),
+                ),
+                SizedBox(height: spacing.h),
+                Flexible(
+                  child: AppCustomText(
+                    text: message,
+                    fontWeight: FontWeight.w500,
+                    color: HexColor("404040"),
+                    fontSize: fontSize.sp,
+                    textAlign: TextAlign.center,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                if (onActionPressed != null && actionText != null) ...[
+                  SizedBox(height: spacing.h),
+                  AppButton(
+                    text: actionText!,
+                    variant: ButtonVariant.primary,
+                    onPressed: onActionPressed!,
+                  ),
+                ],
+              ],
             ),
-            // 16.verticalSpace,
-            // AppCustomText(
-            //   text: title ?? "",
-            //   fontWeight: FontWeight.bold,
-            //   fontSize: 16.sp,
-            // ),
-            20.verticalSpace,
-            AppCustomText(
-              text: message,
-              fontWeight: FontWeight.w500,
-              color: HexColor("404040"),
-              fontSize: 14.sp,
-            ),
-            if (onActionPressed != null && actionText != null) ...[
-              20.verticalSpace,
-              AppButton(
-                text: actionText!,
-                variant: ButtonVariant.primary,
-                onPressed: onActionPressed!,
-              ),
-            ],
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

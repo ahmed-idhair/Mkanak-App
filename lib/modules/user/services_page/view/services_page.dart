@@ -5,6 +5,7 @@ import 'package:mkanak/app/config/app_theme.dart';
 import 'package:mkanak/app/extensions/color.dart';
 import 'package:mkanak/app/routes/app_routes.dart';
 import 'package:mkanak/app/translations/lang_keys.dart';
+import 'package:mkanak/app/utils/keyboard_utils.dart';
 import 'package:mkanak/app/widgets/app_bar/custom_app_bar.dart';
 import 'package:mkanak/app/widgets/common/app_bottom_sheet.dart';
 import 'package:mkanak/app/widgets/common/app_empty_state.dart';
@@ -37,29 +38,37 @@ class ServicesPage extends StatelessWidget {
               controller: controller.searchController,
               actionIconPath: "ic_refresh",
               onActionButtonPressed: () {
-                controller.searchController.text = "";
-                // controller.getHome();
-              },
-              onChanged: (value) {
-                // if (value.isEmpty && controller.searchQuery.isNotEmpty) {
-                //   controller.clearSearch();
-                // }
-              },
-              onSubmitted: () {
-                print('Log zada');
-                // if (controller.searchController.text.isNotEmpty) {
-                //   Get.toNamed(
-                //     AppRoutes.searchProducts,
-                //     arguments: {
-                //       "search": controller.searchController.text,
-                //     },
-                //   );
-                //   controller.searchController.text = "";
-                // }
+                controller.clearSearch();
               },
               height: 48.h,
             ),
             16.verticalSpace,
+            // Header with search results count
+            Obx(() {
+              if (controller.searchQuery.value.isNotEmpty) {
+                return Padding(
+                  padding: EdgeInsets.only(bottom: 8.h),
+                  child: Row(
+                    children: [
+                      AppCustomText(
+                        text: LangKeys.services.tr,
+                        color: HexColor("3A3A3A"),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16.sp,
+                      ),
+                      Spacer(),
+                      AppCustomText(
+                        text:
+                            "${controller.filteredCategoriesList.length} ${LangKeys.results.tr}",
+                        color: HexColor("8F95A6"),
+                        fontSize: 12.sp,
+                      ),
+                    ],
+                  ),
+                );
+              }
+              return SizedBox.shrink();
+            }),
             Expanded(
               child: GetBuilder<ServicesPageController>(
                 id: "updateList",
@@ -67,24 +76,30 @@ class ServicesPage extends StatelessWidget {
                   if (controller.isLoading.value) {
                     return AppLoadingView();
                   }
-                  if (controller.categoriesList.isEmpty) {
-                    return AppEmptyState(
-                      message: LangKeys.noData.tr,
-                      actionText: LangKeys.retry.tr,
-                      onActionPressed: () {
-                        controller.getServices();
-                      },
-                    );
+                  // Show empty state when no services match search
+                  if (controller.filteredCategoriesList.isEmpty) {
+                    if (controller.searchQuery.value.isNotEmpty) {
+                      return AppEmptyState(message: LangKeys.noResultsFound.tr);
+                    } else {
+                      return AppEmptyState(
+                        message: LangKeys.noData.tr,
+                        actionText: LangKeys.retry.tr,
+                        onActionPressed: () {
+                          controller.getServices();
+                        },
+                      );
+                    }
                   }
+
                   return RefreshIndicator(
                     onRefresh: () async {
                       controller.getServices();
                     },
                     child: ListView.builder(
-                      itemCount: controller.categoriesList.length,
+                      itemCount: controller.filteredCategoriesList.length,
                       itemBuilder: (context, index) {
                         return _buildServiceItem(
-                          controller.categoriesList[index],
+                          controller.filteredCategoriesList[index],
                         );
                       },
                     ),
@@ -101,15 +116,15 @@ class ServicesPage extends StatelessWidget {
   Widget _buildServiceItem(Categories category) {
     return GestureDetector(
       onTap: () {
-        if(controller.storage.isAuth()){
+        if (controller.storage.isAuth()) {
+          Get.context?.hideKeyboard();
           Get.toNamed(
             AppRoutes.selectLocation,
             arguments: {"serviceId": category.id},
           );
-        }else{
+        } else {
           confirmBottomSheet();
         }
-
       },
       child: Container(
         margin: EdgeInsetsDirectional.only(bottom: 10.h),

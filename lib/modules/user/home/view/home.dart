@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../app/widgets/app_bar/custom_home_app_bar.dart';
 import '../controller/home_controller.dart';
 import 'custom_bottom_navbar.dart';
 

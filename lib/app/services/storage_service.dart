@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -16,11 +15,6 @@ class StorageService extends GetxService {
   // Storage keys
   static const String USER_KEY = "user_mkanak";
   static const String TOKEN_KEY = "token_mkanak";
-  static const String INTRO_KEY = "is_intro_mkanak";
-  static const String LANG_FIRST_KEY = "is_lang_first_mkanak";
-  static const String LOCATION_KEY = "user_location_mkanak";
-  static const String SELECTED_COUNTRY_KEY = "selected_country_mkanak";
-  static const String SELECTED_CITY_KEY = "selected_city_mkanak";
   static const String LANGUAGE_CODE_KEY = "languageCode";
 
   Future<StorageService> init() async {
@@ -45,7 +39,7 @@ class StorageService extends GetxService {
     if (GetStorage().read(LANGUAGE_CODE_KEY) != null) {
       return GetStorage().read(LANGUAGE_CODE_KEY);
     }
-    return "en";
+    return "ar";
   }
 
   String? getToken() {
@@ -76,29 +70,6 @@ class StorageService extends GetxService {
     GetStorage().write(key, value);
   }
 
-  bool isIntro() {
-    if (GetStorage().read(INTRO_KEY) != null) {
-      return GetStorage().read(INTRO_KEY);
-    } else {
-      return false;
-    }
-  }
-
-  bool isLangFirst() {
-    if (GetStorage().read(LANG_FIRST_KEY) != null) {
-      return GetStorage().read(LANG_FIRST_KEY);
-    } else {
-      return false;
-    }
-  }
-
-  void setIntro(bool isIntro) {
-    GetStorage().write(INTRO_KEY, isIntro);
-  }
-
-  void setLangFirst(bool isLang) {
-    GetStorage().write(LANG_FIRST_KEY, isLang);
-  }
 
   void setUser(User value) {
     GetStorage().write(
@@ -117,53 +88,4 @@ class StorageService extends GetxService {
       ).toJson(),
     );
   }
-
-  // Location methods
-  bool hasLocationData() {
-    return GetStorage().read(SELECTED_COUNTRY_KEY) != null &&
-        GetStorage().read(SELECTED_CITY_KEY) != null;
-  }
-
-  // Save user location (lat/lng)
-  void saveUserLocation(double latitude, double longitude) {
-    final location = {'latitude': latitude, 'longitude': longitude};
-    GetStorage().write(LOCATION_KEY, location);
-  }
-
-  // Get user location
-  Map<String, double>? getUserLocation() {
-    final data = GetStorage().read(LOCATION_KEY);
-    if (data != null) {
-      return {'latitude': data['latitude'], 'longitude': data['longitude']};
-    }
-    return null;
-  }
-
-  // Save selected country
-  // void saveSelectedCountry(Countries country) {
-  //   GetStorage().write(SELECTED_COUNTRY_KEY, country.toJson());
-  // }
-
-  // Get selected country
-  // Countries? getSelectedCountry() {
-  //   final data = GetStorage().read(SELECTED_COUNTRY_KEY);
-  //   if (data != null) {
-  //     return Countries.fromJson(data);
-  //   }
-  //   return null;
-  // }
-
-  // Save selected city
-  // void saveSelectedCity(Cities city) {
-  //   GetStorage().write(SELECTED_CITY_KEY, city.toJson());
-  // }
-
-  // Get selected city
-  // Cities? getSelectedCity() {
-  //   final data = GetStorage().read(SELECTED_CITY_KEY);
-  //   if (data != null) {
-  //     return Cities.fromJson(data);
-  //   }
-  //   return null;
-  // }
 }
